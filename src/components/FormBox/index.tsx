@@ -10,6 +10,7 @@ export function FormBox() {
   const [description, setDescription] = useState('')
   const [quantity, setQuantity] = useState(0)
 
+  //FieldValue
   async function handleProductAdd(){
     firestore()
     .collection('products')
@@ -17,7 +18,16 @@ export function FormBox() {
       description,
       quantity,
       done:false,
+      createdAt: firestore.FieldValue.serverTimestamp()
     })
+    // firestore()
+    // .collection('products')
+    // .doc('Mru81M8flw7Z28j03TVT')
+    // .set({
+    //   description,
+    //   quantity,
+    //   done:false,
+    // })
     .then(() => {
       Alert.alert("Produto adicionado com sucesso!")
     })
