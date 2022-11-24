@@ -11,6 +11,15 @@ import { File, FileProps } from '../../components/File';
 
 export function Receipts() {
   const [photos, setPhotos] = useState<FileProps[]>([]);
+  //3
+  const [photoSelected, setPhotoSelected] = useState('');
+
+  //2
+  async function handleShowImage(path:string){
+    const urlImage = await storage().ref(path).getDownloadURL();
+    //4
+    setPhotoSelected(urlImage)
+  }
 
   useEffect(() =>{
     //ref das imagens .list lista as imagens da pasta 'images'
@@ -30,23 +39,24 @@ export function Receipts() {
   },[])
 
 
+
   return (
     <Container>
       <Header title="Comprovantes" />
-
-      <Photo uri="" />
+      {/* 5 */}
+      <Photo uri={photoSelected} />
 
       <PhotoInfo>
         Informações da foto
       </PhotoInfo>
 
       <FlatList
-        data={photosData}
+        data={photos}
         keyExtractor={item => item.name}
         renderItem={({ item }) => (
           <File
             data={item}
-            onShow={() => { }}
+            onShow={() => handleShowImage(item.path)} //1
             onDelete={() => { }}
           />
         )}
