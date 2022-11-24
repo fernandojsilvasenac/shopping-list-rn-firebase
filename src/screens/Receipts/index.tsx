@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import storage from '@react-native-firebase/storage';
 
 import { Container, PhotoInfo } from './styles';
@@ -28,7 +28,22 @@ export function Receipts() {
 
   }
 
-  useEffect(() =>{
+  //10
+  async function handleDeleteImage(path:string){
+    storage()
+      .ref(path)
+      .delete()
+      .then( () =>{ 
+        Alert.alert('Imagem excluída com sucesso!');
+        //12
+        fetchImages();
+      })
+      .catch( (error) => console.error(error))
+  }
+
+
+  // 11 criar a função pra listar novamente as imagens após deletar
+  async function fetchImages(){
     //ref das imagens .list lista as imagens da pasta 'images'
     // é necessário montar um array com o resultado da lisagem em result.items
     storage().ref('images').list().then( result =>{
@@ -43,6 +58,10 @@ export function Receipts() {
 
       setPhotos(files)
     })
+  }
+  useEffect(() =>{
+    //13
+    fetchImages();
   },[])
 
 
@@ -65,7 +84,7 @@ export function Receipts() {
           <File
             data={item}
             onShow={() => handleShowImage(item.path)} //1
-            onDelete={() => { }}
+            onDelete={() => handleDeleteImage(item.path)} //9
           />
         )}
         contentContainerStyle={{ paddingBottom: 100 }}
