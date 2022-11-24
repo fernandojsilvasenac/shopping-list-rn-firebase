@@ -41,7 +41,7 @@ export function Receipts() {
       </PhotoInfo>
 
       <FlatList
-        data={photosData}
+        data={photos}
         keyExtractor={item => item.name}
         renderItem={({ item }) => (
           <File
