@@ -13,12 +13,19 @@ export function Receipts() {
   const [photos, setPhotos] = useState<FileProps[]>([]);
   //3
   const [photoSelected, setPhotoSelected] = useState('');
+  //6
+  const [photoInfo, setPhotoInfo] = useState('');
 
   //2
   async function handleShowImage(path:string){
     const urlImage = await storage().ref(path).getDownloadURL();
     //4
     setPhotoSelected(urlImage)
+
+    //8 metadata das photos
+    const info = await storage().ref(path).getMetadata();
+    setPhotoInfo(`Upload realizado em ${info.timeCreated} | ${info.size}`)
+
   }
 
   useEffect(() =>{
@@ -47,7 +54,8 @@ export function Receipts() {
       <Photo uri={photoSelected} />
 
       <PhotoInfo>
-        Informações da foto
+        {/* 7 */}
+        {photoInfo}
       </PhotoInfo>
 
       <FlatList
