@@ -70,9 +70,9 @@ export function ShoppingList() {
     // .orderBy('description') // ascendente
 
     // a obrigatoriedade do uso da clausula orderBy
-    .orderBy('quantity')    
-    .startAt(2) // startAfter, startBefore
-    .endAt(5) // endAfter, endBefore
+    // .orderBy('quantity')    
+    // .startAt(2) // startAfter, startBefore
+    // .endAt(5) // endAfter, endBefore
 
     .onSnapshot( querySnapshot => {
       const data = querySnapshot.docs.map( (doc) =>{
